@@ -11,8 +11,8 @@ soup = BeautifulSoup(data.text, features="html.parser")
 sections = soup.findAll('div', { 'class': ['section_wrapper'] })
 # drop bottom navigation
 sections = sections[:-1]
-sections = [soup.find('div', { 'id': 'div_4541204352' }), \
-            soup.find('div', { 'id': 'div_7506607405' })]
+sections = [soup.find('div', { 'id': 'div_7733001657' }), \
+            soup.find('div', { 'id': 'div_3061849500' })]
 all_data = []
 for sect in sections:
     #print(list(contents.children))
@@ -55,8 +55,8 @@ for sect in sections:
             all_data.append({
                 'home_team': team_b,
                 'away_team': team_a,
-                'score_home': score_b,
-                'score_away': score_a,
+                'score_home': int(score_b),
+                'score_away': int(score_a),
                 'winning_team': team_a if win_a else team_b,
                 'location': team_b,
                 'month': date.split(' ')[1],
