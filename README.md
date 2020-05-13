@@ -11,6 +11,5 @@ To run, you'll need to run the two following commands with the first one used to
 extract the data for the chat script (note: you'll need to first install spaCy).
 
 ```
-python3 scraper.py
 python3 chat.py
 ```

@@ -27,9 +27,11 @@ criteria_to_key = {
         'month': ['month'],
         'day': ['month', 'day'],
         'play_against': ['home_team', 'away_team'],
+        'score': ['score_home', 'score_away'],
         'game_count': [None],
         'team_count': [None]
         }
+numeric_keys = ['score', 'game_count', 'team_count']
 
 ''' Quick helper function for the following search function
 '''
@@ -66,10 +68,15 @@ def perform_search(search):
                     fail_key = False
                     continue
                 if not criteria[criterion] == QUESTION_SYMB:
-                    if entry[key] == criteria[criterion]:
-                        #passing_criteria.append((criterion, entry[key]))
-                        fail_key = False
-                        break
+                    if not criterion in numeric_keys: # handle non-numeric fields
+                        if entry[key] == criteria[criterion]:
+                            #passing_criteria.append((criterion, entry[key]))
+                            fail_key = False
+                            break
+                    else: # handle numeric fields
+                        if _count_helper(entry[key], criteria[criterion]):
+                            fail_key = False
+                            break
                 else:
                     fail_key = False
                     #break
@@ -209,6 +216,7 @@ subroutines =[
         ('exact', 'against', ('play_against', QUESTION_SYMB)),
         ('re', '([0-9][0-9]*) games', ('game_count', REGEX_VAL_INT)),
         ('re', '([0-9][0-9]*) teams', ('team_count', REGEX_VAL_INT)),
+        ('re', '([0-9][0-9]*) points', ('score', REGEX_VAL_INT)),
         ]
 
 ''' Given the more Chomsky esque analysis and break down of the query
